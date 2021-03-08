@@ -15,8 +15,6 @@ module.exports = {
   },
 
   findOne: function (req, res) {
-    //console.log(req.params);
-    // console.log("Find one Group function");
     db.Group.findOne({ name: req.params.groupName })
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
@@ -24,7 +22,6 @@ module.exports = {
 
   create: function (req, res) {
     console.log("Group create funciton");
-    //console.log(req.body);
     let inviteCode = uuidv4();
 
     db.Group.create({
@@ -44,9 +41,6 @@ module.exports = {
   },
 
   createSubGroup: function (req, res) {
-    // console.log("createSubGroup Function");
-    // console.log(req.params.subGroupName);
-    // console.log(req.body);
     let inviteCode = uuidv4();
     db.Group.create({
       name: req.params.subGroupName,
@@ -62,8 +56,6 @@ module.exports = {
       inviteCode: inviteCode,
     })
       .then((dbModel) => {
-        //console.log("Then");
-        //console.log(dbModel);
         res.json(dbModel);
       })
       .catch((err) => {
@@ -78,18 +70,15 @@ module.exports = {
       { $push: { subgroups: req.body } }
     )
       .then((dbModel) => {
-        //console.log(dbModel);
         res.json(dbModel);
       })
       .catch((err) => {
-        //console.log(err);
         res.status(422).json(err);
       });
   },
 
   update: function (req, res) {
     console.log("findOneAndUpdate");
-    //console.log(req.body);
     db.Group.update(
       { name: req.params.groupName },
       { $push: { messages: req.body } }
