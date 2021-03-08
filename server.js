@@ -8,7 +8,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-const flash = require("connect-flash");
 const PORT = process.env.PORT || 3001;
 
 const http = require("http");
@@ -19,12 +18,6 @@ const io = socket(server);
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// app.use(bodyParser.json());
-// app.use(cors({
-//   origin: "http://localhost:3000",
-//   credentials: true
-// }))
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
@@ -49,9 +42,6 @@ app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-  // console.log('req.session', req.session);
-  //console.log("user");
-  //console.log(req.session.cookie);
   return next();
 });
 
@@ -88,7 +78,3 @@ io.on("connection", (socket) => {
     console.log("User Disconnected");
   });
 });
-
-// app.listen(PORT, function () {
-//   console.log(`Server is now listening on PORT ${PORT}!`);
-// });
